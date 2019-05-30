@@ -7,8 +7,6 @@ def CriaGrafo() -> (int, int, dict):
     v, e = [int(i) for i in input().split()]
     grafo = dict()
     ent = []
-    # for i in range(97, 97+v):
-    #     grafo[chr(i)] = []
     for i in range(e):
         ent.append(input().split())
         grafo[ent[-1][0]] = []
@@ -59,13 +57,6 @@ def dfs(g: dict):
             p.pop()
     print(tabela)
 
-    # t = 0
-    # verticesN = [*cor.keys()]
-    # pilhaRecur = [cor[verticesN[0]]]
-    # for i in g.keys():
-    #     if cor[i][0] == 0:
-    #         print('branco')
-
 
 def bfs(g: dict):
     """.
@@ -113,7 +104,6 @@ def bfs(g: dict):
                 print('-'.join(filter(lambda x: not (x is None), l)), end='')
             print()
         print()
-    # return tabela
 
 v, e, g = CriaGrafo()
 dfs(g)
