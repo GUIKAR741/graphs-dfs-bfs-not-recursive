@@ -3,6 +3,6 @@
 - [x] Grafo
 - [x] DFS
 - [x] BFS
-- [] Nomear Arestas
-- [] Ordenação Topologica
-- [] Componentes Conexas
+- [ ] Nomear Arestas
+- [ ] Ordenação Topologica
+- [ ] Componentes Conexas
