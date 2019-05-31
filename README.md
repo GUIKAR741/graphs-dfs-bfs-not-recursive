@@ -4,5 +4,5 @@
 - [x] DFS
 - [x] BFS
 - [ ] Nomear Arestas
-- [ ] Ordenação Topologica
-- [ ] Componentes Conexas
+- [x] Ordenação Topologica
+- [x] Componentes Conexas
