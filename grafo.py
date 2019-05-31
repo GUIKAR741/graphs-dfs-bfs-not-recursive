@@ -41,6 +41,7 @@ def dfs(g: dict, vi=None, conexo=False):
                        key=lambda x: x[1], reverse=True)))
     else:
         grau = vi
+    nomeAresta = {i: [[k] for k in j] for i, j in g.items()}
     r = grau.pop(0)
     t = 0
     while len(grau) > 0 or not (r is None):
@@ -50,14 +51,29 @@ def dfs(g: dict, vi=None, conexo=False):
         while len(p) > 0:
             u = p[-1]
             cont = 0
+            verificaCinza = True
             for i in sorted(g[u]):
-                if tabela[i].cor == 0:
+                if tabela[i].cor == 1:
+                    for l in nomeAresta[u]:
+                        if l[-1] == i:
+                            l.append('Retorno')
+                if tabela[i].cor == 2:
+                    for l in nomeAresta[u]:
+                        if l[-1] == i and tabela[u].ti < tabela[i].ti:
+                            l.append('Avanco')
+                        if l[-1] == i and tabela[u].ti > tabela[i].ti:
+                            l.append('Cruzamento')
+                if tabela[i].cor == 0 and verificaCinza:
                     tabela[i].cor = 1
                     p.append(i)
                     grau.pop(grau.index(i))
                     tabela[i].ti = t = t+1
                     cont += 1
-                    break
+                    verificaCinza = False
+                    for l in nomeAresta[u]:
+                        if l[-1] == i:
+                            l.append('Árvore')
+                    # break
             if cont == 0:
                 tabela[u].cor = 2
                 tabela[u].tf = t = t+1
@@ -67,9 +83,13 @@ def dfs(g: dict, vi=None, conexo=False):
         else:
             r = None
     if not conexo:
+        print("DFS:")
+        for i, j in sorted(nomeAresta.items(), key=lambda x: x[0]):
+            for k in j:
+                print(f"{i} {k[0]}: {k[1]}")
         ordTop = list(map(lambda x: x[0],
                           sorted(tabela.items(), key=lambda x: x[-1].tf, reverse=True)))
-        print(tabela)
+        # print(tabela)
         print("Ordenação Topologica:", ' '.join(ordTop))
         conexos = dfs(gt(g), vi=ordTop, conexo=True)
         gr = list(sorted(map(lambda x: (x[0], x[1].ti), conexos.items()),
@@ -105,34 +125,34 @@ def bfs(g: dict):
             """."""
             return f"vertice(cor={self.cor}, d={self.d}, p={self.p})"
     chaves = [*g.keys()]
-    print('bfs:')
-    for s in sorted(chaves):
-        tabela = {i: vertice(0, None, None) for i in g.keys()}
-        # s = chaves[floor(len(chaves)/2)]
-        tabela[s].cor = 1
-        tabela[s].d = 0
-        q = [s]
-        while len(q) > 0:
-            u = q.pop(0)
-            for v in g[u]:
-                if tabela[v].cor == 0:
-                    tabela[v].cor = 1
-                    tabela[v].d = tabela[u].d+1
-                    tabela[v].p = u
-                    q.append(v)
-            tabela[u].cor = 2
-        c = 'inf'
-        for i in sorted(tabela.items(), key=lambda x: x[0]):
-            print(f"{i[0]}: {i[1].d if not (i[1].d is None) else c} -> ", end='')
-            if i[1].p is None:
-                print('null', end='')
-            else:
-                l = [i[0]]
-                while not (l[-1] is None):
-                    l.append(tabela[l[-1]].p)
-                print('-'.join(filter(lambda x: not (x is None), l[::-1])), end='')
-            print()
+    print("BFS:")
+    # for s in sorted(chaves):
+    tabela = {i: vertice(0, None, None) for i in g.keys()}
+    s = chaves[floor(len(chaves)/2)-1]
+    tabela[s].cor = 1
+    tabela[s].d = 0
+    q = [s]
+    while len(q) > 0:
+        u = q.pop(0)
+        for v in g[u]:
+            if tabela[v].cor == 0:
+                tabela[v].cor = 1
+                tabela[v].d = tabela[u].d+1
+                tabela[v].p = u
+                q.append(v)
+        tabela[u].cor = 2
+    c = 'inf'
+    for i in sorted(tabela.items(), key=lambda x: x[0]):
+        print(f"{i[0]}: {i[1].d if not (i[1].d is None) else c} -> ", end='')
+        if i[1].p is None:
+            print('null', end='')
+        else:
+            l = [i[0]]
+            while not (l[-1] is None):
+                l.append(tabela[l[-1]].p)
+            print('-'.join(filter(lambda x: not (x is None), l[::-1])), end='')
         print()
+    print()
 
 
 def gt(g: dict) -> dict:
