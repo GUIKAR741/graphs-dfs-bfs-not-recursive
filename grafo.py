@@ -1,9 +1,9 @@
-"""."""
+"""Trabalho da Disciplina de Grafos."""
 from math import floor
 
 
 def CriaGrafo() -> (int, int, dict):
-    """."""
+    """Recebe e cria o Grafo."""
     v, e = [int(i) for i in input().split()]
     grafo = dict()
     ent = []
@@ -17,21 +17,21 @@ def CriaGrafo() -> (int, int, dict):
 
 
 def dfs(g: dict, vi=None, conexo=False):
-    """.
+    """Faz a Busca em Profundide.
 
     cor: 0=branco, 1=cinza, 2=preto
     """
     class vertice:
-        """."""
+        """Estrura de Vertice usado na DFS."""
 
         def __init__(self, cor, ti, tf):
-            """."""
+            """Inicia o Vertice."""
             self.cor = cor
             self.ti = ti
             self.tf = tf
 
         def __repr__(self):
-            """."""
+            """Representação do Vertice."""
             return f"vertice(cor={self.cor}, ti={self.ti}, tf={self.tf})"
     tabela = {i: vertice(0, 0, 0) for i in g.keys()}
     if vi is None:
@@ -73,7 +73,6 @@ def dfs(g: dict, vi=None, conexo=False):
                     for l in nomeAresta[u]:
                         if l[-1] == i:
                             l.append('Árvore')
-                    # break
             if cont == 0:
                 tabela[u].cor = 2
                 tabela[u].tf = t = t+1
@@ -89,7 +88,6 @@ def dfs(g: dict, vi=None, conexo=False):
                 print(f"{i} {k[0]}: {k[1]}")
         ordTop = list(map(lambda x: x[0],
                           sorted(tabela.items(), key=lambda x: x[-1].tf, reverse=True)))
-        # print(tabela)
         print("Ordenação Topologica:", ' '.join(ordTop))
         conexos = dfs(gt(g), vi=ordTop, conexo=True)
         gr = list(sorted(map(lambda x: (x[0], x[1].ti), conexos.items()),
@@ -108,25 +106,24 @@ def dfs(g: dict, vi=None, conexo=False):
 
 
 def bfs(g: dict):
-    """.
+    """Faz a Busca em Largura.
 
     cor: 0=branco, 1=cinza, 2=preto
     """
     class vertice:
-        """."""
+        """Estrura de Vertice usado na BFS."""
 
         def __init__(self, cor, d, p):
-            """."""
+            """Inicia o Vertice."""
             self.cor = cor
             self.d = d
             self.p = p
 
         def __repr__(self):
-            """."""
+            """Representação do Vertice."""
             return f"vertice(cor={self.cor}, d={self.d}, p={self.p})"
     chaves = [*g.keys()]
     print("BFS:")
-    # for s in sorted(chaves):
     tabela = {i: vertice(0, None, None) for i in g.keys()}
     s = chaves[floor(len(chaves)/2)-1]
     tabela[s].cor = 1
@@ -156,7 +153,7 @@ def bfs(g: dict):
 
 
 def gt(g: dict) -> dict:
-    """."""
+    """Retorna o Transposto do Grafo."""
     gt = {i: [] for i in g.keys()}
     for i, j in g.items():
         for k in j:
