@@ -1,5 +1,4 @@
 """Trabalho da Disciplina de Grafos."""
-from math import floor
 
 
 def CriaGrafo() -> (int, int, dict):
@@ -126,7 +125,7 @@ def bfs(g: dict, ordTop: list):
             return f"vertice(cor={self.cor}, d={self.d}, p={self.p})"
     print("BFS:")
     tabela = {i: vertice(0, None, None) for i in g.keys()}
-    s = ordTop[floor(len(ordTop)/2)-1]
+    s = ordTop[(len(ordTop)//2)-1]
     tabela[s].cor = 1
     tabela[s].d = 0
     q = [s]
