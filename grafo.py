@@ -16,7 +16,7 @@ def CriaGrafo() -> (int, int, dict):
     return v, e, grafo
 
 
-def dfs(g: dict, vi=None, conexo=False):
+def dfs(g: dict, vi=None, conexo=False) -> (list or dict):
     """Faz a Busca em Profundide.
 
     cor: 0=branco, 1=cinza, 2=preto
@@ -88,6 +88,7 @@ def dfs(g: dict, vi=None, conexo=False):
                 print(f"{i} {k[0]}: {k[1]}")
         ordTop = list(map(lambda x: x[0],
                           sorted(tabela.items(), key=lambda x: x[-1].tf, reverse=True)))
+        ordTopRetorno = ordTop[::]
         print("Ordenação Topologica:", ' '.join(ordTop))
         conexos = dfs(gt(g), vi=ordTop, conexo=True)
         gr = list(sorted(map(lambda x: (x[0], x[1].ti), conexos.items()),
@@ -101,11 +102,12 @@ def dfs(g: dict, vi=None, conexo=False):
                 x[-1].append(i)
         x = list(map(lambda y: list(map(lambda z: z[0], y)), x))
         print(f'Componentes Conexas: {len(x)} componentes.', '; '.join([str(i) for i in x]))
+        return ordTopRetorno
     else:
         return tabela
 
 
-def bfs(g: dict):
+def bfs(g: dict, ordTop: list):
     """Faz a Busca em Largura.
 
     cor: 0=branco, 1=cinza, 2=preto
@@ -122,10 +124,9 @@ def bfs(g: dict):
         def __repr__(self):
             """Representação do Vertice."""
             return f"vertice(cor={self.cor}, d={self.d}, p={self.p})"
-    chaves = [*g.keys()]
     print("BFS:")
     tabela = {i: vertice(0, None, None) for i in g.keys()}
-    s = chaves[floor(len(chaves)/2)-1]
+    s = ordTop[floor(len(ordTop)/2)-1]
     tabela[s].cor = 1
     tabela[s].d = 0
     q = [s]
@@ -161,5 +162,5 @@ def gt(g: dict) -> dict:
     return gt
 
 v, e, g = CriaGrafo()
-dfs(g)
-bfs(g)
+ordTop = dfs(g)
+bfs(g, ordTop)
