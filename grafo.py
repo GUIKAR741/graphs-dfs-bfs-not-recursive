@@ -1,4 +1,21 @@
 """Trabalho da Disciplina de Grafos."""
+from pprint import pprint
+from math import ceil
+
+
+def buble(lst):
+    """."""
+    ok = False
+    if all(list(map(lambda x: x.isnumeric(), lst))):
+        lst = list(map(int, lst))
+    while not ok:
+        ok = True
+        for i in range(len(lst)-1):
+            if lst[i] > lst[i+1]:
+                lst[i], lst[i+1] = lst[i+1], lst[i]
+                ok = False
+    lst = list(map(str, lst))
+    return lst
 
 
 def CriaGrafo() -> (int, int, dict):
@@ -35,9 +52,24 @@ def dfs(g: dict, vi=None, conexo=False) -> (list or dict):
     tabela = {i: vertice(0, 0, 0) for i in g.keys()}
     if vi is None:
         grau = list(
-            map(lambda x: x[0],
-                sorted(map(lambda x: (x[0], len(x[1])), g.items()),
-                       key=lambda x: x[1], reverse=True)))
+            map(lambda x: x,
+                map(lambda x: [x[0], len(x[1])], g.items())))
+        for i in grau:
+            for j in g.items():
+                i[1] += len(list(filter(lambda x: x == i[0], j[1])))
+        grau = sorted(grau, key=lambda x: x[1], reverse=True)
+        g1 = [[grau[0]]]
+        for i in grau[1:]:
+            if i[-1] == g1[-1][-1][-1]:
+                g1[-1].append(i)
+            else:
+                g1.append([i])
+        for i in range(len(g1)):
+            g1[i] = list(map(lambda x: x[0], g1[i]))
+        for i in range(len(g1)):
+            g1[i] = sorted(g1[i])
+        g1 = [buble(k) for k in g1]
+        grau = [j for i in g1 for j in i]
     else:
         grau = vi
     nomeAresta = {i: [[k] for k in j] for i, j in g.items()}
@@ -125,7 +157,7 @@ def bfs(g: dict, ordTop: list):
             return f"vertice(cor={self.cor}, d={self.d}, p={self.p})"
     print("BFS:")
     tabela = {i: vertice(0, None, None) for i in g.keys()}
-    s = ordTop[(len(ordTop)//2)-1]
+    s = ordTop[ceil(len(ordTop)/2)-1]
     tabela[s].cor = 1
     tabela[s].d = 0
     q = [s]

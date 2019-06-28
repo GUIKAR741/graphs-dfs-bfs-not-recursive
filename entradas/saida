@@ -1,0 +1,45 @@
+Começar DFS no vértice 2 e depois o 8
+
+1 5 : Árvore
+5 5 : retorno
+12 11 : Retorno
+1 10 : Avanço
+2 2 : Retorno 
+4 4 : Retorno
+2 6 : Árvore
+3 9 : Árvore
+5 7 : Retorno
+11 8 : Retorno
+11 12 : Árvore
+5 10 : Árvore
+2 7 : Árvore
+11 13 : Árvore
+7 1 : Árvore
+8 3 : Árvore
+1 4 : Árvore
+8 13 : Avanço
+9 8 : Retorno
+6 2 : Retorno
+12 4 : Cruzamento
+8 11 : Árvore
+10 7 : Retorno
+13 12 : Cruzamento
+
+Ordenação Topólogica: 8 11 13 12 3 9 2 7 1 5 10 4 6
+Componentes Conexas: [8 9 3 11 12 13]; [2 6]; [7 5 1 10]; [4]
+
+Começar BFS no vértice 2
+
+1: 2 -> 2 - 7
+2: 0 -> 2
+3: Inf -> Null
+4: 3 -> 2 - 7 - 1
+5: 3 -> 2 - 7 - 1
+6: 1 -> 2
+7: 1 -> 2
+8: Inf -> Null
+9: Inf -> Null
+10: 3-> 2 - 7 - 1
+11: Inf -> Null
+12: Inf -> Null
+13: Inf -> Null

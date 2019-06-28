@@ -1,0 +1,42 @@
+DFS:
+1 5: Árvore
+1 10: Árvore
+1 4: Árvore
+10 7: Árvore
+11 8: Árvore
+11 12: Árvore
+11 13: Árvore
+12 11: Retorno
+12 4: Cruzamento
+13 12: Cruzamento
+2 2: Retorno
+2 6: Árvore
+2 7: Cruzamento
+3 9: Árvore
+4 4: Retorno
+5 5: Retorno
+5 7: Cruzamento
+5 10: Cruzamento
+6 2: Retorno
+7 1: Retorno
+8 3: Árvore
+8 13: Cruzamento
+8 11: Retorno
+9 8: Retorno
+Ordenação Topologica: 2 6 11 8 3 9 13 12 1 5 4 10 7
+Componentes Conexas: 4 componentes. ['2', '6']; ['11', '12', '13', '8', '9', '3']; ['1', '7', '10', '5']; ['4']
+BFS:
+1: inf -> null
+10: inf -> null
+11: 2 -> 13-12-11
+12: 1 -> 13-12
+13: 0 -> null
+2: inf -> null
+3: 4 -> 13-12-11-8-3
+4: 2 -> 13-12-4
+5: inf -> null
+6: inf -> null
+7: inf -> null
+8: 3 -> 13-12-11-8
+9: 5 -> 13-12-11-8-3-9
+
